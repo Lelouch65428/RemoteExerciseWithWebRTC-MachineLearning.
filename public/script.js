@@ -14,7 +14,7 @@ const peers = {};
 var color = "blue";
 navigator.mediaDevices
   .getUserMedia({
-    video: true,
+    video: { width: 600, height: 400 },
     audio: true,
   })
   .then((stream) => {
