@@ -27,16 +27,55 @@ navigator.mediaDevices
       const poses = await detector.estimatePoses(myVideo);
       //console.log(poses);
       ctx.drawImage(myVideo, 0, 0, 600, 400);
+      const mesh = {
+        face: [4, 2, 0, 1, 3],
+        rightHand: [6, 8, 10],
+        leftHand: [5, 7, 9],
+        leftLeg: [5, 11, 13, 15],
+        rightLeg: [6, 12, 14, 16],
+        hip: [11, 12],
+        shoulder: [6, 5],
+      };
       poses.forEach((pred) => {
+        const points = pred.keypoints;
+        for (let j = 0; j < Object.keys(mesh).length; j++) {
+          let Head_Line = Object.keys(mesh)[j];
+          //console.log(Head_Line);
+
+          for (let k = 0; k < mesh[Head_Line].length - 1; k++) {
+            const firstJointIndex = mesh[Head_Line][k];
+            const secondJointIndex = mesh[Head_Line][k + 1];
+
+            if (
+              points[firstJointIndex].score > 0.4 &&
+              points[secondJointIndex].score > 0.4
+            ) {
+              //console.log(secondJointIndex);
+              ctx.beginPath();
+              ctx.moveTo(points[firstJointIndex].x, points[firstJointIndex].y);
+              ctx.lineTo(
+                points[secondJointIndex].x,
+                points[secondJointIndex].y
+              );
+              //console.log([secondJointIndex][0]);
+
+              ctx.strokeStyle = "red";
+              ctx.lineWidth = 4;
+              ctx.stroke();
+            }
+          }
+        }
         const key = pred.keypoints;
         for (let i = 0; i < key.length; i++) {
-          const x = key[i].x;
-          const y = key[i].y;
+          if (key[i].score > 0.5) {
+            const x = key[i].x;
+            const y = key[i].y;
 
-          ctx.beginPath();
-          ctx.arc(x, y, 5, 0, 3 * Math.PI);
-          ctx.fillStyle = color;
-          ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, 3 * Math.PI);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+          }
         }
       });
     };
@@ -96,3 +135,5 @@ function addVideoStream(video, stream) {
   });
   videoGrid.append(video);
 }
+
+funtion;
