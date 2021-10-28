@@ -1,3 +1,5 @@
+var stage = null;
+var count = 0;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const socket = io("/");
@@ -77,6 +79,39 @@ navigator.mediaDevices
             ctx.fill();
           }
         }
+
+        let shoulderx = key[5].x;
+        let shouldery = key[5].y;
+        let elbowx = key[7].x;
+        let elbowy = key[7].y;
+        let wristx = key[9].x;
+        let wristy = key[9].y;
+
+        //console.log(shoulder);
+        let ko = find_angle(
+          shoulderx,
+          shouldery,
+          elbowx,
+          elbowy,
+          wristx,
+          wristy
+        );
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "green";
+        ctx.fillText(ko, elbowx, elbowy);
+
+        if (ko > 150) {
+          stage = "Down";
+        }
+
+        if (ko < 50 && stage == "Down") {
+          stage = "Up";
+          count += 1;
+        }
+        ctx.font = "30px Comic Sans MS";
+        ctx.fillStyle = "green";
+        ctx.fillText(count, 40, 40);
+        console.log(count);
       });
     };
 
@@ -136,4 +171,14 @@ function addVideoStream(video, stream) {
   videoGrid.append(video);
 }
 
-funtion;
+function find_angle(Ax, Ay, Bx, By, Cx, Cy) {
+  var AB = Math.sqrt(Math.pow(Bx - Ax, 2) + Math.pow(By - Ay, 2));
+  var BC = Math.sqrt(Math.pow(Bx - Cx, 2) + Math.pow(By - Cy, 2));
+  var AC = Math.sqrt(Math.pow(Cx - Ax, 2) + Math.pow(Cy - Ay, 2));
+  var angles =
+    Math.acos((BC * BC + AB * AB - AC * AC) / (2 * BC * AB)) * (180 / Math.PI);
+  if (angles > 180) {
+    angles = 360 - angles;
+  }
+  return angles;
+}
