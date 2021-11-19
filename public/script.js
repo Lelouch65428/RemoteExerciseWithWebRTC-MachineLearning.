@@ -15,7 +15,7 @@ const myPeer = new Peer(undefined, {
 });
 const myVideo = document.getElementById("myVideo");
 myVideo.muted = true;
-const canvasStream = canvas.captureStream();
+const canvasStream = canvas1.captureStream();
 const peers = {};
 var color = "blue";
 var exercise = "";
