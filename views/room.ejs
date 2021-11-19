@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
     <script>
-      const ROOM_ID = "76df5ae1-f8a1-41ed-8b7f-960f52712ec7";
+      const ROOM_ID = "<%= roomId %>";
     </script>
     <script
       defer
@@ -18,30 +25,96 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection"></script>
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <style>
-      #video-grid {
+      /* #video-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, 300px);
-        grid-auto-rows: 300px;
-      }
+        grid-template-columns: repeat(auto-fill, 600px);
+        grid-auto-rows: 600px;
+      } */
 
       video {
         width: 600px;
-        height: 400px;
-        object-fit: contain;
+        height: 600px;
+        object-fit: none;
       }
 
       #myVideo {
         display: none;
-        width: 100px;
-        height: 100px;
+        width: 600px;
+        height: 600px;
+      }
+      .p-auto {
+        padding-top: 5rem;
       }
     </style>
-    <video id="myVideo"></video>
-    <canvas id="canvas" width="600px" height="400px"></canvas>
   </head>
-
+  <canvas
+    id="canvas1"
+    width="600px"
+    height="500px"
+    style="display: none"
+  ></canvas>
+  <canvas
+    id="canvas2"
+    width="600px"
+    height="100px"
+    style="display: none"
+  ></canvas>
   <body>
-    <div id="video-grid"></div>
+    <div class="p-auto">
+      <div class="row">
+        <div class="col-5 ms-2">
+          <video id="myVideo"></video>
+          <canvas id="canvas" width="600px" height="600px"></canvas>
+        </div>
+        <div
+          class="col col-1 text-center my-auto ms-4"
+          style="width: 12.499999995%"
+        >
+          <div
+            style="height: 85px; width: 85px"
+            class="bg-primary rounded-circle text-center m-auto"
+          >
+            <h1 class="pt-3 text-white">Vs</h1>
+          </div>
+          <div class="form-group pt-4 pb-3">
+            <form>
+              <select class="form-control" id="exercise" name="excercise">
+                <option value="leftcurls">Left Curls</option>
+                <option value="rightcurls">Right Curls</option>
+                <option value="JumpingJacks">Jumping Jacks</option>
+                <option value="squats">Squat</option>
+                <option value="pushup">PushUp</option>
+              </select>
+            </form>
+          </div>
+          <div class="pb-2">
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="selectedExercise()"
+            >
+              Start
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-warning mx-auto" onclick="reset()">
+              Reset
+            </button>
+          </div>
+        </div>
+        <div class="col-5">
+          <div style="width: 600px; height: 600px" class="col-4 pb-4 mb-2">
+            <div id="video-grid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
