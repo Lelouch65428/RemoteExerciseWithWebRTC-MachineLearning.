@@ -14,7 +14,7 @@ const myPeer = new Peer(undefined, {
   port: "443",
 });
 const myVideo = document.getElementById("myVideo");
-myVideo.muted = true;
+//myVideo.muted = true;
 const canvasStream = canvas1.captureStream();
 const peers = {};
 var color = "blue";
