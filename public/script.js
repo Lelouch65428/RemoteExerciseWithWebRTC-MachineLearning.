@@ -178,10 +178,10 @@ const detectpose = async () => {
           lshoulderx,
           lshouldery
         );
-        ctx.font = "100px Comic Sans MS";
-        ctx.fillStyle = "green";
+        //ctx.font = "100px Comic Sans MS";
+        //ctx.fillStyle = "green";
         //ctx.fillText(po, lelbowx, lelbowy);
-        ctx.fillText(po, 300, 300);
+        //ctx.fillText(po, 300, 300);
         JumpingJacks(po, op);
       }
       // ctx.font = "100px Comic Sans MS";
@@ -228,10 +228,11 @@ const detectpose = async () => {
     ctx2.fillStyle = "red";
     ctx2.rect(0, 0, 600, 100);
     ctx2.fill();
-    ctx2.font = "30px Comic Sans MS";
+    ctx2.font = "80px Comic Sans MS";
     ctx2.fillStyle = "black";
     //ctx2.clearRect(0, 0, 600, 100);
-    ctx2.fillText(count, 300, 50);
+    ctx2.fillText(count, 170, 70);
+    ctx2.fillText("Left", 300, 70);
     ctx.drawImage(canvas2, 0, 500);
   });
 };
@@ -330,6 +331,12 @@ function leftcurls(ko) {
 
     console.log((count -= 1));
   }
+  if (count < 0) {
+    window.alert(
+      "Exercise finished please slelect a new exercise or quit the session"
+    );
+    reset();
+  }
 }
 
 function JumpingJacks(ko, ok) {
@@ -340,6 +347,12 @@ function JumpingJacks(ko, ok) {
   if (ko > 100 && ok < 170 && stage == "Down") {
     stage = "Up";
     console.log((count -= 1));
+  }
+  if (count < 0) {
+    window.alert(
+      "Exercise finished please slelect a new exercise or quit the session"
+    );
+    reset();
   }
 }
 function squats(ao) {
@@ -352,6 +365,12 @@ function squats(ao) {
     //console.log("up");
     console.log((count -= 1));
   }
+  if (count < 0) {
+    window.alert(
+      "Exercise finished please slelect a new exercise or quit the session"
+    );
+    reset();
+  }
 }
 
 function pushup(lol) {
@@ -361,6 +380,12 @@ function pushup(lol) {
   if (lol < 150 && stage == "Down") {
     stage = "Up";
     console.log((count -= 1));
+  }
+  if (count < 0) {
+    window.alert(
+      "Exercise finished please slelect a new exercise or quit the session"
+    );
+    reset();
   }
 }
 
@@ -373,6 +398,12 @@ function rightcurls(ko) {
     stage = "Up";
 
     console.log((count -= 1));
+  }
+  if (count < 0) {
+    window.alert(
+      "Exercise finished please slelect a new exercise or quit the session"
+    );
+    reset();
   }
 }
 
