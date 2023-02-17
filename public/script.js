@@ -135,12 +135,12 @@ const detectpose = async () => {
     if (exercise == "leftcurls") {
       if (key[9].score > 0.3) {
         let leftcurlangle = find_angle1(
-          lshoulderx,
-          lshouldery,
+          lwristx,
+          lwristy,
           lelbowx,
           lelbowy,
-          lwristx,
-          lwristy
+          lshoulderx,
+          lshouldery
         );
 
         leftcurls(leftcurlangle);
@@ -148,12 +148,12 @@ const detectpose = async () => {
     } else if (exercise == "rightcurls") {
       if (key[10].score > 0.3) {
         let rightcurllangle = find_angle1(
-          rshoulderx,
-          rshouldery,
+          rwristx,
+          rwristy,
           relbowx,
           relbowy,
-          rwristx,
-          rwristy
+          rshoulderx,
+          rshouldery
         );
         rightcurls(rightcurllangle);
       }
@@ -170,14 +170,7 @@ const detectpose = async () => {
 
         // }
         // if (key[13].score > 0.3) {
-        let op = find_angle2(
-          lanklex,
-          lankley,
-          lhipx,
-          lhipy,
-          lshoulderx,
-          lshouldery
-        );
+        let op = find_angle2(lanklex, lankley, lhipx, lhipy, rhipx, rhipy);
         //ctx.font = "100px Comic Sans MS";
         //ctx.fillStyle = "green";
         //ctx.fillText(po, lelbowx, lelbowy);
@@ -254,6 +247,7 @@ myVideo.addEventListener("loadeddata", async () => {
 myPeer.on("call", (call) => {
   console.log("Sending my stream" + canvasStream);
   call.answer(canvasStream);
+  console.log("Answering...");
   const video = document.createElement("video");
   call.on("stream", (userVideoStream) => {
     console.log("Receiving  user stream", userVideoStream);
@@ -278,6 +272,7 @@ function connectToNewUser(userId, stream) {
   const video = document.createElement("video");
   const call = myPeer.call(userId, stream);
   console.log(call);
+  console.log("offering");
   call.on("stream", (userVideoStream) => {
     console.log("Receiving  user stream" + userId);
     addVideoStream(video, userVideoStream);
@@ -322,7 +317,7 @@ function find_angle2(Ax, Ay, Bx, By, Cx, Cy) {
 }
 
 function leftcurls(ko) {
-  if (ko > 150) {
+  if (ko > 140) {
     stage = "Down";
   }
 
@@ -340,11 +335,12 @@ function leftcurls(ko) {
 }
 
 function JumpingJacks(ko, ok) {
-  if (ko < 20 && ok > 170) {
+  //shoulder , hip
+  if (ko < 20 && ok <= 90) {
     stage = "Down";
   }
 
-  if (ko > 100 && ok < 170 && stage == "Down") {
+  if (ko > 140 && ok > 100 && stage == "Down") {
     stage = "Up";
     console.log((count -= 1));
   }
@@ -356,11 +352,11 @@ function JumpingJacks(ko, ok) {
   }
 }
 function squats(ao) {
-  if (ao > 160) {
+  if (ao > 175) {
     stage = "Down";
     //console.log("down");
   }
-  if (ao < 120 && stage == "Down") {
+  if (ao < 100 && stage == "Down") {
     stage = "Up";
     //console.log("up");
     console.log((count -= 1));
@@ -374,7 +370,7 @@ function squats(ao) {
 }
 
 function pushup(lol) {
-  if (lol > 170) {
+  if (lol > 175) {
     stage = "Down";
   }
   if (lol < 150 && stage == "Down") {
@@ -390,7 +386,7 @@ function pushup(lol) {
 }
 
 function rightcurls(ko) {
-  if (ko > 150) {
+  if (ko > 140) {
     stage = "Down";
   }
 
